@@ -1,0 +1,218 @@
+
+.headlogo{
+	padding:20px 30px;
+	height:180px;
+}
+header	.container{
+	max-width:1154px;
+	min-width:240px;
+	background-color:#173270;
+	background: radial-gradient(50% 20%, circle farthest-side, #336699, #173270);
+	background: -moz-radial-gradient(33% 10%,  circle closest-corner, #336699, #173270);
+	background: -ms-radial-gradient(33% 10%,  circle closest-corner, #336699, #173270);
+	background: -webkit-radial-gradient(33% 10%,  circle closest-corner, #336699, #173270);
+	background: -o-radial-gradient(33% 10%,  circle closest-corner, #336699, #173270);
+	padding:0 30px;}
+
+header .container .span6{margin:0 0 10px 0;}
+
+.headlogo .span6 img{
+	width:72px;}
+.headlogo .span6 img, .logoimg{float:left;}
+
+.logoimg{
+	width:280px;
+	margin:20px 0 0 20px;}
+
+.header-title-1:before {
+	content: "а";
+	font-size: 33px;
+}
+.header-title-2:before {
+	content: "а";
+	font-size: 33px;
+}
+.header-title-1, .header-title-2, .header-title-1 a, .header-title-2 a{
+	font-size: 31px;
+	font-family:"Romul";
+	color:#e1dddd;
+	text-decoration:none;
+}
+
+.contact{
+	color:white;
+	border:1px solid white;
+	padding:15px 10px;
+	font-size:12px;
+	font-family:Verdana;
+	text-align:center;
+	width:208px;
+}
+/*.contact p{
+	padding:3px 0px;
+	}*/
+
+@media screen and (min-width: 944px) and (max-width: 1190px)
+{
+	.headlogo .span6{
+		width:55%;
+		float:left;
+		box-sizing:content-box;}
+	.logoimg{
+		width:250px;
+		margin:15px 0 0 15px;}
+	.headlogo .span6 img{	width:60px;}
+	.header-title-1:before {
+		font-size: 31px;
+	}
+	.header-title-2:before {
+		font-size: 31px;
+	}
+	.header-title-1, .header-title-2, .header-title-1 a, .header-title-2 a{
+		font-size: 29px;
+	}
+
+	.headlogo .span3{
+		width:30%;
+		float:right;
+		margin:0;
+	}
+}
+
+@media screen and (min-width: 752px) and (max-width: 943px)
+{
+	.headlogo .span6{
+		width:55%;
+		float:left;}
+	.logoimg{
+		width:230px;
+		margin:10px 0 0 15px;}
+	.headlogo .span6 img{	width:60px;}
+	.header-title-1:before {
+		font-size: 30px;
+	}
+	.header-title-2:before {
+		font-size: 30px;
+	}
+	.header-title-1, .header-title-2, .header-title-1 a, .header-title-2 a{
+		font-size: 28px;
+	}
+
+	.headlogo .span3{
+		width:30%;
+		float:right;
+		margin:0;
+	}
+}
+@media screen  and (min-width: 344px) and (max-width: 752px)
+{
+	.headlogo{
+		padding:20px 20px;
+	}
+	.logoimg{
+		width:133px;
+		margin:0px 0 0 10px;}
+	.headlogo .span6 img{	width:40px;}
+	.header-title-1:before {
+		font-size: 21px;
+	}
+	.header-title-2:before {
+		font-size: 21px;
+	}
+	.header-title-1, .header-title-2, .header-title-1 a, .header-title-2 a{
+		font-size: 16px;
+	}
+
+	header .container .span6{margin:0 0 20px 0;}
+
+	.contact{
+		padding:10px 2px;
+		font-size:11px;
+		font-family:Verdana;
+		text-align:center;
+		width:180px;
+	}
+
+}
+@media screen   and (max-width: 344px)
+{
+	.headlogo{
+		padding:20px 10px;
+	}
+	.logoimg{
+		width:110px;
+		margin:0px 0 0 10px;}
+	.headlogo .span6 img{	width:35px;}
+	.header-title-1:before {
+		font-size: 15px;
+	}
+	.header-title-2:before {
+		font-size: 15px;
+	}
+	.header-title-1, .header-title-2, .header-title-1 a, .header-title-2 a{
+		font-size: 13px;
+	}
+
+	header .container .span6{margin:0 0 20px 0;}
+
+	.contact{
+		padding:10px 2px;
+		font-size:10px;
+		font-family:Verdana;
+		text-align:center;
+		width:160px;
+	}
+
+}
+
+/*аМаЕаНб*/
+
+header .nav-bar	.container{
+	max-width:1154px;
+	min-width:240px;
+	background-color:white;
+
+	padding:0;}
+
+header .nav-bar	.container ul{
+	background-color:white;
+	padding:5px 0;
+	margin:0;
+}
+
+header .nav-bar	.container a{
+	background:white;
+	padding:10px 27px;
+	color:#1f7287;
+	border-color:white;
+	border-style:solid;
+	border-left-width:1px;
+	border-bottom-width:3px;
+	border-top-width:1px;
+	border-right-width:3px;
+	border-radius:0;
+	text-decoration:none;
+	font-size:16px;}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus{
+	color:#1f7287;
+	background:white;
+	border-color:#11667c;
+	border-style:solid;
+	border-left-width:1px;
+	border-bottom-width:3px;
+	border-top-width:1px;
+	border-right-width:3px;
+	border-radius:0;
+}
+
+header .nav-bar	.container a:hover{
+
+	border-color:#11667c;
+	border-style:solid;
+	border-left-width:1px;
+	border-bottom-width:3px;
+	border-top-width:1px;
+	border-right-width:3px;
+	border-radius:0;}
+
