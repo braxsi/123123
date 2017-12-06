@@ -3,8 +3,7 @@ package braxxi.kursach.client.controller;
 import braxxi.kursach.client.service.ServerServce;
 import braxxi.kursach.client.ui.DefaultDialog;
 import braxxi.kursach.client.ui.EstateView;
-import braxxi.kursach.commons.model.Estate;
-import braxxi.kursach.commons.model.EstateRequest;
+import braxxi.kursach.commons.entity.EstateEntity;
 import braxxi.kursach.commons.model.EstateResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +24,7 @@ public abstract class BaseEstateController implements UIControlller {
 
 	protected DefaultDialog dialog;
 	protected EstateView estateView;
-	protected Estate estate;
+	protected EstateEntity estate;
 
 	public BaseEstateController() {
 	}
@@ -56,7 +55,7 @@ public abstract class BaseEstateController implements UIControlller {
 
 	protected abstract EstateResponse executeRequest();
 
-	public void setEstate(Estate estate) {
+	public void setEstate(EstateEntity estate) {
 		this.estate = estate;
 		estateView.setData(estate);
 	}

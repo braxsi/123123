@@ -1,5 +1,6 @@
 package braxxi.kursach.commons.model;
 
+import braxxi.kursach.commons.entity.EstateEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
@@ -7,16 +8,16 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SearchResponse {
 
-	private List<Estate> estates;
+	private List<EstateEntity> estates;
 
 	public SearchResponse() {
 	}
 
-	public SearchResponse(List<Estate> estates) {
+	public SearchResponse(List<EstateEntity> estates) {
 		this.estates = estates;
 	}
 
-	public List<Estate> getEstates() {
+	public List<EstateEntity> getEstates() {
 		return this.estates;
 	}
 }

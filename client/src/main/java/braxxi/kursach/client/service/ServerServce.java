@@ -1,6 +1,7 @@
 package braxxi.kursach.client.service;
 
 import braxxi.kursach.commons.model.*;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -36,7 +38,7 @@ public class ServerServce {
 
 		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 
-		ResponseEntity<LoginResponse> response = restTemplate.postForEntity("/login", request, LoginResponse.class);
+		ResponseEntity<LoginResponse> response = postForEntity("/login", request, LoginResponse.class);
 		if (response.getBody().isSuccess()) {
 			// TODO final List<String> cookie = response.getHeaders().get("Cookie");
 			serverSession.setCookie("unknown");
@@ -48,19 +50,19 @@ public class ServerServce {
 
 	public SearchResponse searchEstates(SearchRequest searchRequest) {
 		HttpEntity<SearchRequest> request = createRequest(searchRequest);
-		ResponseEntity<SearchResponse> response = restTemplate.postForEntity("/estate/search", request, SearchResponse.class);
+		ResponseEntity<SearchResponse> response = postForEntity("/estate/search", request, SearchResponse.class);
 		return response.getBody();
 	}
 
 	public EstateResponse addEstate(EstateRequest estateRequest) {
 		HttpEntity<EstateRequest> request = createRequest(estateRequest);
-		ResponseEntity<EstateResponse> response = restTemplate.postForEntity("/estate/add", request, EstateResponse.class);
+		ResponseEntity<EstateResponse> response = postForEntity("/estate/add", request, EstateResponse.class);
 		return response.getBody();
 	}
 
 	public EstateResponse updateEstate(EstateRequest estateRequest) {
 		HttpEntity<EstateRequest> request = createRequest(estateRequest);
-		ResponseEntity<EstateResponse> response = restTemplate.postForEntity("/estate/update", request, EstateResponse.class);
+		ResponseEntity<EstateResponse> response = postForEntity("/estate/update", request, EstateResponse.class);
 		return response.getBody();
 	}
 
@@ -70,5 +72,14 @@ public class ServerServce {
 		headers.add("Cookie", serverSession.getCookie());
 
 		return new HttpEntity<T>(request, headers);
+	}
+
+	private <R, T> ResponseEntity<T> postForEntity(String uri, HttpEntity<R> request, Class<T> clazz) {
+		try {
+			return restTemplate.postForEntity(uri, request, clazz);
+		} catch (HttpServerErrorException e) {
+			LoggerFactory.getLogger(getClass()).error("uri={} response={}", uri, e.getResponseBodyAsString());
+			throw e;
+		}
 	}
 }

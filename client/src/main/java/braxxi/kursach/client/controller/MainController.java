@@ -2,7 +2,8 @@ package braxxi.kursach.client.controller;
 
 import braxxi.kursach.client.service.ServerServce;
 import braxxi.kursach.client.ui.MainForm;
-import braxxi.kursach.commons.model.Estate;
+import braxxi.kursach.commons.entity.EstateEntity;
+import braxxi.kursach.commons.model.SearchEstate;
 import braxxi.kursach.commons.model.SearchRequest;
 import braxxi.kursach.commons.model.SearchResponse;
 import org.slf4j.Logger;
@@ -43,13 +44,13 @@ public class MainController implements UIControlller {
 	}
 
 	public void searchEstates(ActionEvent event) {
-		final SearchResponse searchResponse = serverServce.searchEstates(new SearchRequest(new Estate()));
+		final SearchResponse searchResponse = serverServce.searchEstates(new SearchRequest(new SearchEstate()));
 		mainForm.setSearchResponse(searchResponse);
 	}
 
 	public void addEstate(ActionEvent event) {
 		addEstateController.init();
-		addEstateController.setEstate(new Estate());
+		addEstateController.setEstate(new EstateEntity());
 		addEstateController.show();
 		addEstateController.dispose();
 

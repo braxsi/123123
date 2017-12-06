@@ -3,7 +3,7 @@ package braxxi.kursach.client.ui;
 import braxxi.kursach.client.model.DefaultAction;
 import braxxi.kursach.client.model.DefaultTableModel;
 import braxxi.kursach.client.model.EstateTableModel;
-import braxxi.kursach.commons.model.Estate;
+import braxxi.kursach.commons.entity.EstateEntity;
 import braxxi.kursach.commons.model.SearchResponse;
 
 import javax.swing.*;
@@ -71,9 +71,9 @@ public class MainForm extends JFrame {
 		this.editEstateAction.setActionListener(actionListener);
 	}
 
-	public Estate getCurrentEstate() {
+	public EstateEntity getCurrentEstate() {
 		final int selectedRow = mainView.getMainTable().getSelectedRow();
-		final DefaultTableModel<Estate> model = (DefaultTableModel<Estate>) mainView.getMainTable().getModel();
+		final DefaultTableModel<EstateEntity> model = (DefaultTableModel<EstateEntity>) mainView.getMainTable().getModel();
 		return model.getEntityByRow(selectedRow);
 	}
 }

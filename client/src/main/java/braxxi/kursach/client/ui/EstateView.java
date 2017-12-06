@@ -1,6 +1,6 @@
 package braxxi.kursach.client.ui;
 
-import braxxi.kursach.commons.model.Estate;
+import braxxi.kursach.commons.entity.EstateEntity;
 
 import javax.swing.*;
 import javax.swing.text.DefaultFormatter;
@@ -45,7 +45,7 @@ public class EstateView {
 		return this.rootPanel;
 	}
 
-	public void setData(Estate data) {
+	public void setData(EstateEntity data) {
 		textFieldDistrict.setText(data.getDistrict());
 
 		formattedTextFieldTotalArea.setValue(data.getTotalArea());
@@ -57,7 +57,7 @@ public class EstateView {
 		textAreaDescription.setText(data.getDescription());
 	}
 
-	public void getData(Estate data) {
+	public void getData(EstateEntity data) {
 		data.setDistrict(textFieldDistrict.getText());
 
 		data.setTotalArea((BigDecimal) formattedTextFieldTotalArea.getValue());

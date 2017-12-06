@@ -1,4 +1,4 @@
-package braxxi.kursach.commons.model;
+package braxxi.kursach.commons.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.RandomUtils;
@@ -7,7 +7,7 @@ import org.apache.commons.text.RandomStringGenerator;
 import java.math.BigDecimal;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Estate {
+public class EstateEntity {
 	private Long id;
 	private String district;
 	private BigDecimal totalArea;
@@ -15,11 +15,12 @@ public class Estate {
 	private int floor;
 	private int distanceToMetro;
 	private String description;
+	private Long userId;
 
-	public Estate() {
+	public EstateEntity() {
 	}
 
-	public Estate(Long id, String district, BigDecimal totalArea, BigDecimal livingArea, int floor, int distanceToMetro, String description) {
+	public EstateEntity(Long id, String district, BigDecimal totalArea, BigDecimal livingArea, int floor, int distanceToMetro, String description, Long userId) {
 		this.id = id;
 		this.district = district;
 		this.totalArea = totalArea;
@@ -27,6 +28,7 @@ public class Estate {
 		this.floor = floor;
 		this.distanceToMetro = distanceToMetro;
 		this.description = description;
+		this.userId = userId;
 	}
 
 	public Long getId() {
@@ -85,15 +87,24 @@ public class Estate {
 		this.description = description;
 	}
 
-	public static Estate generateRandom(Long id) {
+	public Long getUserId() {
+		return this.userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public static EstateEntity generateRandom(Long id) {
 		final int totalArea = RandomUtils.nextInt(5, 200);
 		final RandomStringGenerator stringGenerator = new RandomStringGenerator.Builder().withinRange('а', 'я').build();
-		return new Estate(id, stringGenerator.generate(10),
+		return new EstateEntity(id, stringGenerator.generate(10),
 				BigDecimal.valueOf(totalArea),
 				BigDecimal.valueOf((int) (totalArea * 0.7)),
 				RandomUtils.nextInt(1, 25),
 				RandomUtils.nextInt(50, 1000),
-				"Описание " + stringGenerator.generate(10)
+				"Описание " + stringGenerator.generate(10),
+				-1L
 		);
 	}
 }

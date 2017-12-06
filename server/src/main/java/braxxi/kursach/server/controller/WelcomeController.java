@@ -1,7 +1,6 @@
 package braxxi.kursach.server.controller;
 
 import braxxi.kursach.server.model.AddUser;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +13,8 @@ import java.time.LocalDateTime;
 public class WelcomeController {
 
 	// inject via application.properties
-	@Value("${welcome.message}")
-	private String message;
+	//@Value("${welcome.message}")
+	private String message = "Welcome";
 
 	@GetMapping("/")
 	public String welcome(Model model) {

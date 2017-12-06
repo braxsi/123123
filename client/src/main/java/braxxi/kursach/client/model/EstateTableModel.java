@@ -1,16 +1,16 @@
 package braxxi.kursach.client.model;
 
-import braxxi.kursach.commons.model.Estate;
+import braxxi.kursach.commons.entity.EstateEntity;
 
 import java.util.List;
 
-public class EstateTableModel extends DefaultTableModel<Estate> {
+public class EstateTableModel extends DefaultTableModel<EstateEntity> {
 
 	public EstateTableModel() {
 		entities.addAll(entities);
 	}
 
-	public EstateTableModel(List<Estate> estates) {
+	public EstateTableModel(List<EstateEntity> estates) {
 		entities.addAll(estates);
 	}
 
@@ -28,7 +28,7 @@ public class EstateTableModel extends DefaultTableModel<Estate> {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Estate estate = entities.get(rowIndex);
+		EstateEntity estate = entities.get(rowIndex);
 
 		switch (columnIndex) {
 			case 0:

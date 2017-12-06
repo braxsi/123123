@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `apartments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `apartments` (
-  `idapartments` int(11) NOT NULL,
+  `idapartments` int(11) NOT NULL AUTO_INCREMENT,
   `total_area` varchar(16) NOT NULL,
   `living_space` varchar(16) NOT NULL,
   `room_count` varchar(16) NOT NULL,
@@ -57,7 +57,7 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `user_id` int(16) NOT NULL,
+  `user_id` int(16) NOT NULL AUTO_INCREMENT,
   `login` varchar(32) NOT NULL,
   `password` varchar(32) NOT NULL,
   `email` varchar(64) NOT NULL,

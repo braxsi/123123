@@ -1,20 +1,21 @@
 package braxxi.kursach.commons.model;
 
+import braxxi.kursach.commons.entity.EstateEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EstateResponse {
 
-	private Estate estate;
+	private EstateEntity estate;
 
 	public EstateResponse() {
 	}
 
-	public EstateResponse(Estate estate) {
+	public EstateResponse(EstateEntity estate) {
 		this.estate = estate;
 	}
 
-	public Estate getEstate() {
+	public EstateEntity getEstate() {
 		return this.estate;
 	}
 }
