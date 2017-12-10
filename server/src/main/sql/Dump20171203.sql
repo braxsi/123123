@@ -16,37 +16,63 @@ USE `braxsi1`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
 --
--- Table structure for table `apartments`
+-- Table structure for table `estates`
 --
 
-DROP TABLE IF EXISTS `apartments`;
+DROP TABLE IF EXISTS `districts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `apartments` (
-  `idapartments` int(11) NOT NULL AUTO_INCREMENT,
-  `total_area` varchar(16) NOT NULL,
-  `living_space` varchar(16) NOT NULL,
-  `room_count` varchar(16) NOT NULL,
-  `location` varchar(256) NOT NULL,
-  `contacts` varchar(64) NOT NULL,
-  `distance_from_metro` varchar(128) NOT NULL,
-  `description` varchar(512) DEFAULT NULL,
-  `user_id` int(16) NOT NULL,
-  PRIMARY KEY (`idapartments`),
-  KEY `fk_apartments_users_idx` (`user_id`),
-  CONSTRAINT `fk_apartments_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+CREATE TABLE `districts` (
+  `district_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`district_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `apartments`
+-- Dumping data for table `districts`
 --
 
-LOCK TABLES `apartments` WRITE;
-/*!40000 ALTER TABLE `apartments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `apartments` ENABLE KEYS */;
+LOCK TABLES `districts` WRITE;
+UNLOCK TABLES;
+
+
+--
+-- Table structure for table `estates`
+--
+
+DROP TABLE IF EXISTS `estates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `estates` (
+  `estate_id` int(11) NOT NULL AUTO_INCREMENT,
+  `district_id` int(11) NOT NULL,
+  `total_area` DECIMAL(10,1) NOT NULL,
+  `living_area` DECIMAL(10,1) NOT NULL,
+  `kitchen_area` DECIMAL(10,1) NOT NULL,
+  `floor` INT(11) NOT NULL,
+  `floors` INT(11) NOT NULL,
+  `distance_to_metro` INT(11),
+  `description` varchar(512) DEFAULT NULL,
+  `rooms` INT(11) NOT NULL,
+  `contacts` varchar(255) NOT NULL,
+  `user_id` int(16) NOT NULL,
+  PRIMARY KEY (`estate_id`),
+  KEY `fk_estates_users_idx` (`user_id`),
+  KEY `fk_estates_districts_idx` (`district_id`),
+  CONSTRAINT `fk_estates_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_estates_districts` FOREIGN KEY (`district_id`) REFERENCES `districts` (`district_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `estates`
+--
+
+LOCK TABLES `estates` WRITE;
+/*!40000 ALTER TABLE `estates` DISABLE KEYS */;
+/*!40000 ALTER TABLE `estates` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -70,8 +96,6 @@ CREATE TABLE `users` (
 --
 
 LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -84,3 +108,15 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2017-12-03 23:31:21
+
+INSERT INTO users (user_id, login, password, email) VALUES (1, 'admin', 'password', 'admin');
+
+INSERT INTO districts (district_id, name) VALUES (1, 'Центральный район');
+INSERT INTO districts (district_id, name) VALUES (2, 'Советский район');
+INSERT INTO districts (district_id, name) VALUES (3, 'Первомайский район');
+INSERT INTO districts (district_id, name) VALUES (4, 'Партизанский район');
+INSERT INTO districts (district_id, name) VALUES (5, 'Заводской район');
+INSERT INTO districts (district_id, name) VALUES (6, 'Ленинский район');
+INSERT INTO districts (district_id, name) VALUES (7, 'Октябрьский район');
+INSERT INTO districts (district_id, name) VALUES (8, 'Московский район');
+INSERT INTO districts (district_id, name) VALUES (9, 'Фрунзенский район');

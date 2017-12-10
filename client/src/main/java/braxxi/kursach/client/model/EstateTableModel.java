@@ -20,9 +20,12 @@ public class EstateTableModel extends DefaultTableModel<EstateEntity> {
 				"Район",
 				"Общая площадь",
 				"Жилая площадь",
+				"Площадь кухни",
 				"Этаж",
+				"Всего этажей",
 				"До метро, метров",
-				"Описание"
+				"Описание",
+				"Контакты",
 		};
 	}
 
@@ -32,17 +35,23 @@ public class EstateTableModel extends DefaultTableModel<EstateEntity> {
 
 		switch (columnIndex) {
 			case 0:
-				return estate.getDistrict();
+				return estate.getDistrictId();
 			case 1:
 				return estate.getTotalArea();
 			case 2:
 				return estate.getLivingArea();
 			case 3:
-				return estate.getFloor();
+				return estate.getKitchenArea();
 			case 4:
-				return estate.getDistanceToMetro();
+				return estate.getFloor();
 			case 5:
+				return estate.getFloors();
+			case 6:
+				return estate.getDistanceToMetro();
+			case 7:
 				return estate.getDescription();
+			case 8:
+				return estate.getContacts();
 			default:
 				return "";
 		}

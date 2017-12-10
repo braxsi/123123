@@ -5,6 +5,7 @@ import braxxi.kursach.client.ui.DefaultDialog;
 import braxxi.kursach.client.ui.EstateView;
 import braxxi.kursach.commons.entity.EstateEntity;
 import braxxi.kursach.commons.model.EstateResponse;
+import braxxi.kursach.commons.model.SystemConfigurationResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public abstract class BaseEstateController implements UIControlller {
 	protected DefaultDialog dialog;
 	protected EstateView estateView;
 	protected EstateEntity estate;
+	protected SystemConfigurationResponse systemConfiguration;
 
 	public BaseEstateController() {
 	}
@@ -32,8 +34,10 @@ public abstract class BaseEstateController implements UIControlller {
 	@PostConstruct
 	@Override
 	public void init() {
+		systemConfiguration = serverServce.getSystemConfiguration();
+
 		estateView = new EstateView();
-		estateView.init();
+		estateView.init(systemConfiguration.getDistricts());
 
 		dialog = new DefaultDialog();
 		dialog.setContent(estateView.getRootPanel());

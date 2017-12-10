@@ -44,7 +44,8 @@ public class MainController implements UIControlller {
 	}
 
 	public void searchEstates(ActionEvent event) {
-		final SearchResponse searchResponse = serverServce.searchEstates(new SearchRequest(new SearchEstate()));
+		SearchEstate searchEstate = mainForm.getSearchEstate();
+		final SearchResponse searchResponse = serverServce.searchEstates(new SearchRequest(searchEstate));
 		mainForm.setSearchResponse(searchResponse);
 	}
 

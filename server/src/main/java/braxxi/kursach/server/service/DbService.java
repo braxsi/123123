@@ -3,6 +3,7 @@ package braxxi.kursach.server.service;
 
 import braxxi.kursach.commons.entity.EstateEntity;
 import braxxi.kursach.commons.model.SearchEstate;
+import braxxi.kursach.commons.model.SystemDictionary;
 import braxxi.kursach.server.dao.EstateDao;
 import braxxi.kursach.server.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,9 @@ public class DbService {
 
 	public void updateEstate(EstateEntity entity) {
 		estateDao.updateEstate(entity);
+	}
+
+	public SystemDictionary getDistricts() {
+		return estateDao.getDistricts();
 	}
 }

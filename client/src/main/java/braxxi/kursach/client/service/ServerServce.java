@@ -20,7 +20,7 @@ public class ServerServce {
 	private ServerSession serverSession;
 
 	public ServerServce(RestTemplateBuilder restTemplateBuilder, ServerSession serverSession) {
-		restTemplate = restTemplateBuilder.rootUri("http://localhost:8080/kursach/").build();
+		restTemplate = restTemplateBuilder.rootUri("http://localhost:8080/kursach/api").build();
 		this.serverSession = serverSession;
 	}
 
@@ -66,11 +66,15 @@ public class ServerServce {
 		return response.getBody();
 	}
 
+	public SystemConfigurationResponse getSystemConfiguration() {
+		ResponseEntity<SystemConfigurationResponse> response = postForEntity("/getSystemConfiguration", null, SystemConfigurationResponse.class);
+		return response.getBody();
+	}
+
 	private <T> HttpEntity<T> createRequest(T request) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 		headers.add("Cookie", serverSession.getCookie());
-
 		return new HttpEntity<T>(request, headers);
 	}
 
