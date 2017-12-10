@@ -1,16 +1,17 @@
 package braxxi.kursach.client.model;
 
 import braxxi.kursach.commons.entity.EstateEntity;
+import braxxi.kursach.commons.model.DictionaryItem;
+import braxxi.kursach.commons.model.SystemDictionary;
 
 import java.util.List;
 
 public class EstateTableModel extends DefaultTableModel<EstateEntity> {
 
-	public EstateTableModel() {
-		entities.addAll(entities);
-	}
+	private SystemDictionary districts;
 
-	public EstateTableModel(List<EstateEntity> estates) {
+	public EstateTableModel(SystemDictionary districts, List<EstateEntity> estates) {
+		this.districts = districts;
 		entities.addAll(estates);
 	}
 
@@ -35,7 +36,7 @@ public class EstateTableModel extends DefaultTableModel<EstateEntity> {
 
 		switch (columnIndex) {
 			case 0:
-				return estate.getDistrictId();
+				return DictionaryItem.getName(districts.findById(estate.getDistrictId()));
 			case 1:
 				return estate.getTotalArea();
 			case 2:

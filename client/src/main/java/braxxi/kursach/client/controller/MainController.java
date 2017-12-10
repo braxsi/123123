@@ -6,6 +6,7 @@ import braxxi.kursach.commons.entity.EstateEntity;
 import braxxi.kursach.commons.model.SearchEstate;
 import braxxi.kursach.commons.model.SearchRequest;
 import braxxi.kursach.commons.model.SearchResponse;
+import braxxi.kursach.commons.model.SystemConfigurationResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class MainController implements UIControlller {
 	private EditEstateController editEstateController;
 
 	private MainForm mainForm;
+	private SystemConfigurationResponse systemConfigurationResponse;
 
 	public MainController() {
 	}
@@ -37,7 +39,10 @@ public class MainController implements UIControlller {
 	@PostConstruct
 	@Override
 	public void init() {
+		systemConfigurationResponse = serverServce.getSystemConfiguration();
+
 		mainForm = new MainForm();
+		mainForm.init(systemConfigurationResponse.getDistricts());
 		mainForm.setSearchActionListener(this::searchEstates);
 		mainForm.setAddActionListener(this::addEstate);
 		mainForm.setEditActionListener(this::updateEstate);

@@ -5,9 +5,9 @@ import braxxi.kursach.commons.model.DictionaryItem;
 import braxxi.kursach.commons.model.SearchEstate;
 import braxxi.kursach.commons.model.SystemDictionary;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StrBuilder;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +22,51 @@ import java.util.stream.Collectors;
 public class EstateDao extends BaseDao {
 
 	public List<EstateEntity> search(SearchEstate searchEstate) {
-		final SqlParameterSource parameterSource = new MapSqlParameterSource();
-		return getNamedParameterJdbcTemplate().query("SELECT * FROM estates",
+		final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+		StrBuilder where = new StrBuilder();
+
+		addSimpleCondition("district_id", searchEstate.getDistrictId(), parameterSource, where);
+		addFromTo("total_area", searchEstate.getTotalAreaFrom(), searchEstate.getTotalAreaTo(), parameterSource, where);
+		addFromTo("living_area", searchEstate.getLivingAreaFrom(), searchEstate.getLivingAreaTo(), parameterSource, where);
+		addFromTo("kitchen_area", searchEstate.getKitchenAreaFrom(), searchEstate.getKitchenAreaTo(), parameterSource, where);
+		addFromTo("floor", searchEstate.getFloorFrom(), searchEstate.getFloorTo(), parameterSource, where);
+		addFromTo("rooms", searchEstate.getRoomsFrom(), searchEstate.getRoomsTo(), parameterSource, where);
+
+		String whereString = where.isEmpty() ? "" : where.insert(0, " WHERE ").toString();
+		return getNamedParameterJdbcTemplate().query("SELECT * FROM estates" + whereString,
 				parameterSource,
 				ESTATE_ROW_MAPPER);
+	}
+
+	private void addFromTo(String field, Object fromValue, Object toValue, MapSqlParameterSource parameterSource, StrBuilder where) {
+		if (fromValue != null) {
+			if (!where.isEmpty()) {
+				where.append(" AND ");
+			}
+			addCondition(field, fromValue, "_from", ">=", parameterSource, where);
+		}
+		if (toValue != null) {
+			if (!where.isEmpty()) {
+				where.append(" AND ");
+			}
+			addCondition(field, toValue, "_to", "<=", parameterSource, where);
+		}
+//		where.append(")");
+	}
+
+	private void addSimpleCondition(String field, Object value, MapSqlParameterSource parameterSource, StrBuilder where) {
+		if (value != null) {
+			if (!where.isEmpty()) {
+				where.append(" AND ");
+			}
+			addCondition(field, value, "", "=", parameterSource, where);
+		}
+	}
+
+	private void addCondition(String field, Object value, String suffix, String operator, MapSqlParameterSource parameterSource, StrBuilder where) {
+		final String paramName = field + suffix;
+		parameterSource.addValue(paramName, value);
+		where.append(field).append(operator).append(":").append(paramName);
 	}
 
 	public Long addEstate(EstateEntity estate) {

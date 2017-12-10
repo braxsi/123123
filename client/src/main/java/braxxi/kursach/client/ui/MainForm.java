@@ -6,6 +6,7 @@ import braxxi.kursach.client.model.EstateTableModel;
 import braxxi.kursach.commons.entity.EstateEntity;
 import braxxi.kursach.commons.model.SearchEstate;
 import braxxi.kursach.commons.model.SearchResponse;
+import braxxi.kursach.commons.model.SystemDictionary;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -14,18 +15,29 @@ import java.awt.event.ActionListener;
 
 public class MainForm extends JFrame {
 
-	private final MainView mainView;
-	private final SearchEstateView searchEstateView;
+	private MainView mainView;
+	private SearchEstateView searchEstateView;
 	private DefaultAction searchEstateAction = new DefaultAction("Поиск");
 	private DefaultAction addEstateAction = new DefaultAction("Добавить");
 	private DefaultAction editEstateAction = new DefaultAction("Изменить");
 	private DefaultAction deleteEstateAction = new DefaultAction("Удалить");
+	private SystemDictionary districts;
 
 	public MainForm() {
-		searchEstateView = creatSearchEstateView();
+	}
+
+	public void init(SystemDictionary districts) {
+		this.districts = districts;
+		searchEstateView = creatSearchEstateView(this.districts);
 		mainView = createMainView(searchEstateView);
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	}
+
+	private SearchEstateView creatSearchEstateView(SystemDictionary districts) {
+		final SearchEstateView searchEstateView = new SearchEstateView();
+		searchEstateView.init(districts);
+		return searchEstateView;
 	}
 
 	private MainView createMainView(SearchEstateView searchEstateView) {
@@ -39,7 +51,7 @@ public class MainForm extends JFrame {
 		mainView.getSearchEstatesButton().setAction(searchEstateAction);
 		mainView.getAddEstateButton().setAction(addEstateAction);
 		mainView.getEditEstateButton().setAction(editEstateAction);
-		mainView.getDeleteEstateButton().setAction(editEstateAction);
+		mainView.getDeleteEstateButton().setAction(deleteEstateAction);
 
 		mainView.getMainTable().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		mainView.getMainTable().setRowSelectionAllowed(true);
@@ -52,10 +64,6 @@ public class MainForm extends JFrame {
 		});
 		updateOnTableSelectionChange(false);
 		return mainView;
-	}
-
-	private SearchEstateView creatSearchEstateView() {
-		return new SearchEstateView();
 	}
 
 	private void updateOnTableSelectionChange(boolean hasSelection) {
@@ -91,7 +99,7 @@ public class MainForm extends JFrame {
 	}
 
 	public void setSearchResponse(SearchResponse searchResponse) {
-		mainView.getMainTable().setModel(new EstateTableModel(searchResponse.getEstates()));
+		mainView.getMainTable().setModel(new EstateTableModel(districts, searchResponse.getEstates()));
 	}
 
 	public void setSearchActionListener(ActionListener actionListener) {

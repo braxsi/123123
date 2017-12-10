@@ -4,14 +4,10 @@ import braxxi.kursach.commons.entity.EstateEntity;
 import braxxi.kursach.commons.model.SystemDictionary;
 
 import javax.swing.*;
-import javax.swing.text.DefaultFormatter;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 
-import static braxxi.kursach.client.ui.UIUtils.getSelectedDictionaryItemId;
+import static braxxi.kursach.client.ui.UIUtils.*;
 
 public class EstateView {
 	private JFormattedTextField formattedTextFieldTotalArea;
@@ -34,27 +30,13 @@ public class EstateView {
 		final DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel(districts.getItems().toArray());
 		comboBoxDistrict.setModel(comboBoxModel);
 
-		DefaultFormatterFactory bigDecimalFormatter = createBigDecimalFormatter();
-		formattedTextFieldTotalArea.setFormatterFactory(bigDecimalFormatter);
-		formattedTextFieldLivingArea.setFormatterFactory(bigDecimalFormatter);
-		formattedTextFieldKitchenArea.setFormatterFactory(bigDecimalFormatter);
+		formattedTextFieldTotalArea.setFormatterFactory(createBigDecimalFormatter());
+		formattedTextFieldLivingArea.setFormatterFactory(createBigDecimalFormatter());
+		formattedTextFieldKitchenArea.setFormatterFactory(createBigDecimalFormatter());
 
-		DefaultFormatterFactory intFormatter = createIntFormatter();
-		formattedTextFieldFloor.setFormatterFactory(intFormatter);
-		formattedTextFieldFloors.setFormatterFactory(intFormatter);
-		formattedTextFieldDistanceToMetro.setFormatterFactory(intFormatter);
-	}
-
-	private DefaultFormatterFactory createBigDecimalFormatter() {
-		DefaultFormatter fmt = new NumberFormatter(new DecimalFormat("#.0"));
-		fmt.setValueClass(BigDecimal.class);
-		return new DefaultFormatterFactory(fmt, fmt, fmt);
-	}
-
-	private DefaultFormatterFactory createIntFormatter() {
-		DefaultFormatter fmt = new NumberFormatter(new DecimalFormat("0"));
-		fmt.setValueClass(Integer.class);
-		return new DefaultFormatterFactory(fmt, fmt, fmt);
+		formattedTextFieldFloor.setFormatterFactory(createIntFormatter());
+		formattedTextFieldFloors.setFormatterFactory(createIntFormatter());
+		formattedTextFieldDistanceToMetro.setFormatterFactory(createIntFormatter());
 	}
 
 	public JPanel getRootPanel() {

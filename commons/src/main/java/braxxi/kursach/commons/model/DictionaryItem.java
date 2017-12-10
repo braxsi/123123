@@ -12,6 +12,10 @@ public class DictionaryItem {
 		this.name = name;
 	}
 
+	public static String getName(DictionaryItem dictionaryItem) {
+		return dictionaryItem == null ? "" : dictionaryItem.getName();
+	}
+
 	public Integer getId() {
 		return this.id;
 	}
