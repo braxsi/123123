@@ -24,6 +24,8 @@ public class SearchEstateView {
 	private JFormattedTextField formattedTextFieldRoomsTo;
 	private JFormattedTextField formattedTextFieldFloorFrom;
 	private JFormattedTextField formattedTextFieldFloorTo;
+	private JFormattedTextField formattedTextFieldPriceFrom;
+	private JFormattedTextField formattedTextFieldPriceTo;
 
 	public void init(SystemDictionary districts) {
 		final java.util.List<DictionaryItem> items = new ArrayList(districts.getItems());
@@ -40,6 +42,9 @@ public class SearchEstateView {
 
 		formattedTextFieldKitchenAreaFrom.setFormatterFactory(createBigDecimalFormatter());
 		formattedTextFieldKitchenAreaTo.setFormatterFactory(createBigDecimalFormatter());
+
+		formattedTextFieldPriceFrom.setFormatterFactory(createBigDecimalFormatter());
+		formattedTextFieldPriceTo.setFormatterFactory(createBigDecimalFormatter());
 
 		formattedTextFieldRoomsFrom.setFormatterFactory(createIntFormatter());
 		formattedTextFieldRoomsTo.setFormatterFactory(createIntFormatter());
@@ -67,6 +72,9 @@ public class SearchEstateView {
 		data.setKitchenAreaFrom((BigDecimal) formattedTextFieldKitchenAreaFrom.getValue());
 		data.setKitchenAreaTo((BigDecimal) formattedTextFieldKitchenAreaTo.getValue());
 
+		data.setPriceFrom((BigDecimal) formattedTextFieldPriceFrom.getValue());
+		data.setPriceTo((BigDecimal) formattedTextFieldPriceTo.getValue());
+
 		data.setRoomsFrom((Integer) formattedTextFieldRoomsFrom.getValue());
 		data.setRoomsTo((Integer) formattedTextFieldRoomsTo.getValue());
 
@@ -92,13 +100,13 @@ public class SearchEstateView {
 	 */
 	private void $$$setupUI$$$() {
 		rootPanel = new JPanel();
-		rootPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(7, 4, new Insets(0, 0, 0, 0), -1, -1));
+		rootPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(8, 4, new Insets(0, 0, 0, 0), -1, -1));
 		rootPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Параметры поиска"));
 		final JLabel label1 = new JLabel();
 		label1.setText("Район");
 		rootPanel.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
 		final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
-		rootPanel.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(6, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+		rootPanel.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(7, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
 		final JLabel label2 = new JLabel();
 		label2.setText("Комнат, от");
 		rootPanel.add(label2, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -151,6 +159,16 @@ public class SearchEstateView {
 		final JLabel label11 = new JLabel();
 		label11.setText("Этаж, до");
 		rootPanel.add(label11, new com.intellij.uiDesigner.core.GridConstraints(5, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+		final JLabel label12 = new JLabel();
+		label12.setText("Стоимость, от");
+		rootPanel.add(label12, new com.intellij.uiDesigner.core.GridConstraints(6, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+		formattedTextFieldPriceFrom = new JFormattedTextField();
+		rootPanel.add(formattedTextFieldPriceFrom, new com.intellij.uiDesigner.core.GridConstraints(6, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+		final JLabel label13 = new JLabel();
+		label13.setText("Стоимость, до");
+		rootPanel.add(label13, new com.intellij.uiDesigner.core.GridConstraints(6, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+		formattedTextFieldPriceTo = new JFormattedTextField();
+		rootPanel.add(formattedTextFieldPriceTo, new com.intellij.uiDesigner.core.GridConstraints(6, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
 	}
 
 	/**

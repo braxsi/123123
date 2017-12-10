@@ -25,6 +25,7 @@ public class EstateTableModel extends DefaultTableModel<EstateEntity> {
 				"Этаж",
 				"Всего этажей",
 				"До метро, метров",
+				"Стоимость",
 				"Описание",
 				"Контакты",
 		};
@@ -50,8 +51,10 @@ public class EstateTableModel extends DefaultTableModel<EstateEntity> {
 			case 6:
 				return estate.getDistanceToMetro();
 			case 7:
-				return estate.getDescription();
+				return estate.getPrice();
 			case 8:
+				return estate.getDescription();
+			case 9:
 				return estate.getContacts();
 			default:
 				return "";

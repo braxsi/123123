@@ -51,4 +51,23 @@ public class MainController {
 		return new EstateResponse(dbService.getEstate(requestEstate.getId()));
 	}
 
+	@PostMapping("/estate/delete")
+	public EstateResponse deleteEstate(@RequestBody EstateRequest request) {
+		final EstateEntity requestEstate = request.getEstate();
+		dbService.deleteEstate(requestEstate.getId());
+		return new EstateResponse(null);
+	}
+
+	@PostMapping("/estate/estimate")
+	public EstimateEstateResponse estimateEstate(@RequestBody EstateRequest request) {
+		final EstateEntity requestEstate = request.getEstate();
+		return dbService.estimateEstate(requestEstate);
+	}
+
+	@PostMapping("/estate/generate")
+	public VoidResponse estimateEstate(@RequestBody GenerateEstatesRequest request) {
+		dbService.generateEstate(request);
+		return new VoidResponse();
+	}
+
 }

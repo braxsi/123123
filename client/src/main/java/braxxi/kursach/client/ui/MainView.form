@@ -19,7 +19,9 @@
                 <preferred-size width="-1" height="20"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <floatable value="false"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="cf4dd" class="javax.swing.JButton" binding="searchEstatesButton">
@@ -48,6 +50,26 @@
                 <constraints/>
                 <properties>
                   <text value="Удалить"/>
+                </properties>
+              </component>
+              <component id="8b517" class="javax.swing.JToolBar$Separator">
+                <constraints/>
+                <properties/>
+              </component>
+              <component id="2a40f" class="javax.swing.JButton" binding="estimateEstateButton">
+                <constraints/>
+                <properties>
+                  <text value="Оценить"/>
+                </properties>
+              </component>
+              <component id="b0ba9" class="javax.swing.JToolBar$Separator">
+                <constraints/>
+                <properties/>
+              </component>
+              <component id="35bb9" class="javax.swing.JButton" binding="generateEstateButton">
+                <constraints/>
+                <properties>
+                  <text value="Сгенерировать"/>
                 </properties>
               </component>
             </children>

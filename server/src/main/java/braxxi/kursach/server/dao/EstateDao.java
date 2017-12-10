@@ -1,9 +1,8 @@
 package braxxi.kursach.server.dao;
 
 import braxxi.kursach.commons.entity.EstateEntity;
-import braxxi.kursach.commons.model.DictionaryItem;
-import braxxi.kursach.commons.model.SearchEstate;
-import braxxi.kursach.commons.model.SystemDictionary;
+import braxxi.kursach.commons.model.*;
+import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StrBuilder;
 import org.springframework.jdbc.core.RowMapper;
@@ -25,48 +24,18 @@ public class EstateDao extends BaseDao {
 		final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 		StrBuilder where = new StrBuilder();
 
-		addSimpleCondition("district_id", searchEstate.getDistrictId(), parameterSource, where);
-		addFromTo("total_area", searchEstate.getTotalAreaFrom(), searchEstate.getTotalAreaTo(), parameterSource, where);
-		addFromTo("living_area", searchEstate.getLivingAreaFrom(), searchEstate.getLivingAreaTo(), parameterSource, where);
-		addFromTo("kitchen_area", searchEstate.getKitchenAreaFrom(), searchEstate.getKitchenAreaTo(), parameterSource, where);
-		addFromTo("floor", searchEstate.getFloorFrom(), searchEstate.getFloorTo(), parameterSource, where);
-		addFromTo("rooms", searchEstate.getRoomsFrom(), searchEstate.getRoomsTo(), parameterSource, where);
+		DaoUtils.addSimpleCondition("district_id", searchEstate.getDistrictId(), parameterSource, where);
+		DaoUtils.addFromTo("total_area", searchEstate.getTotalAreaFrom(), searchEstate.getTotalAreaTo(), parameterSource, where);
+		DaoUtils.addFromTo("living_area", searchEstate.getLivingAreaFrom(), searchEstate.getLivingAreaTo(), parameterSource, where);
+		DaoUtils.addFromTo("kitchen_area", searchEstate.getKitchenAreaFrom(), searchEstate.getKitchenAreaTo(), parameterSource, where);
+		DaoUtils.addFromTo("floor", searchEstate.getFloorFrom(), searchEstate.getFloorTo(), parameterSource, where);
+		DaoUtils.addFromTo("rooms", searchEstate.getRoomsFrom(), searchEstate.getRoomsTo(), parameterSource, where);
+		DaoUtils.addFromTo("price", searchEstate.getPriceFrom(), searchEstate.getPriceTo(), parameterSource, where);
 
 		String whereString = where.isEmpty() ? "" : where.insert(0, " WHERE ").toString();
 		return getNamedParameterJdbcTemplate().query("SELECT * FROM estates" + whereString,
 				parameterSource,
 				ESTATE_ROW_MAPPER);
-	}
-
-	private void addFromTo(String field, Object fromValue, Object toValue, MapSqlParameterSource parameterSource, StrBuilder where) {
-		if (fromValue != null) {
-			if (!where.isEmpty()) {
-				where.append(" AND ");
-			}
-			addCondition(field, fromValue, "_from", ">=", parameterSource, where);
-		}
-		if (toValue != null) {
-			if (!where.isEmpty()) {
-				where.append(" AND ");
-			}
-			addCondition(field, toValue, "_to", "<=", parameterSource, where);
-		}
-//		where.append(")");
-	}
-
-	private void addSimpleCondition(String field, Object value, MapSqlParameterSource parameterSource, StrBuilder where) {
-		if (value != null) {
-			if (!where.isEmpty()) {
-				where.append(" AND ");
-			}
-			addCondition(field, value, "", "=", parameterSource, where);
-		}
-	}
-
-	private void addCondition(String field, Object value, String suffix, String operator, MapSqlParameterSource parameterSource, StrBuilder where) {
-		final String paramName = field + suffix;
-		parameterSource.addValue(paramName, value);
-		where.append(field).append(operator).append(":").append(paramName);
 	}
 
 	public Long addEstate(EstateEntity estate) {
@@ -77,9 +46,9 @@ public class EstateDao extends BaseDao {
 						"(estate_id, " +
 						"district_id, total_area, living_area, kitchen_area, " +
 						"floor, floors, distance_to_metro, " +
-						"description, rooms, contacts, user_id)" +
+						"description, rooms, contacts, price,  user_id)" +
 						" VALUES " +
-						"(:estate_id, :district_id, :total_area, :living_area, :kitchen_area, :floor, :floors, :distance_to_metro, :description, :rooms, :contacts, :user_id)",
+						"(:estate_id, :district_id, :total_area, :living_area, :kitchen_area, :floor, :floors, :distance_to_metro, :description, :rooms, :contacts, :price, :user_id)",
 				sqlParameterSource, generatedKeyHolder);
 		return generatedKeyHolder.getKey().longValue();
 	}
@@ -90,26 +59,34 @@ public class EstateDao extends BaseDao {
 				"UPDATE estates SET " +
 						"district_id=:district_id, total_area=:total_area, living_area=:living_area, kitchen_area=:kitchen_area, " +
 						"floor=:floor, floors=:floors, distance_to_metro=:distance_to_metro, " +
-						"description=:description, rooms=:rooms, contacts=:contacts" +
+						"description=:description, rooms=:rooms, price=:price, contacts=:contacts" +
 						//", user_id=:user_id" +
 						" WHERE estate_id=:estate_id",
 				sqlParameterSource);
 	}
 
+	public void deleteEstate(Long estateId) {
+		int count = getNamedParameterJdbcTemplate().update(
+				"DELETE FROM estates WHERE estate_id=:estate_id"
+				, new MapSqlParameterSource("estate_id", estateId));
+		Preconditions.checkState(count == 1, "Count should be 1 but " + count);
+	}
+
 	private MapSqlParameterSource getMapSqlParameterSource(EstateEntity estate) {
 		return new MapSqlParameterSource()
-					.addValue("estate_id", estate.getId())
-					.addValue("district_id", estate.getDistrictId())
-					.addValue("total_area", estate.getTotalArea())
-					.addValue("living_area", estate.getLivingArea())
-					.addValue("kitchen_area", estate.getKitchenArea())
-					.addValue("floor", estate.getFloor())
-					.addValue("floors", estate.getFloors())
-					.addValue("distance_to_metro", estate.getDistanceToMetro())
-					.addValue("description", StringUtils.trimToNull(estate.getDescription()))
-					.addValue("rooms", estate.getRooms())
-					.addValue("contacts", StringUtils.trimToNull(estate.getContacts()))
-					.addValue("user_id", estate.getUserId());
+				.addValue("estate_id", estate.getId())
+				.addValue("district_id", estate.getDistrictId())
+				.addValue("total_area", estate.getTotalArea())
+				.addValue("living_area", estate.getLivingArea())
+				.addValue("kitchen_area", estate.getKitchenArea())
+				.addValue("floor", estate.getFloor())
+				.addValue("floors", estate.getFloors())
+				.addValue("distance_to_metro", estate.getDistanceToMetro())
+				.addValue("description", StringUtils.trimToNull(estate.getDescription()))
+				.addValue("rooms", estate.getRooms())
+				.addValue("contacts", StringUtils.trimToNull(estate.getContacts()))
+				.addValue("price", estate.getPrice())
+				.addValue("user_id", estate.getUserId());
 	}
 
 	public EstateEntity getEstate(Long estateId) {
@@ -119,8 +96,29 @@ public class EstateDao extends BaseDao {
 				, ESTATE_ROW_MAPPER);
 	}
 
+	public EstimateEstateResponse estimateEstate(EstateEntity entity) {
+		final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+		StrBuilder where = new StrBuilder();
+
+		DaoUtils.addSimpleCondition("district_id", entity.getDistrictId(), parameterSource, where);
+		DaoUtils.addFromToWithCoeff("total_area", entity.getTotalArea(), parameterSource, where);
+		DaoUtils.addFromToWithCoeff("living_area", entity.getLivingArea(), parameterSource, where);
+		DaoUtils.addFromToWithCoeff("kitchen_area", entity.getKitchenArea(), parameterSource, where);
+
+		//addFromToWithCoeff("floor", entity.get(), parameterSource, where);
+		//addFromToWithCoeff("floors", entity.get(), parameterSource, where);
+		//addFromToWithCoeff("distance_to_metro", entity.get(), parameterSource, where);
+
+		DaoUtils.addSimpleCondition("rooms", entity.getRooms(), parameterSource, where);
+
+		String whereString = where.isEmpty() ? "" : where.insert(0, " WHERE ").toString();
+		return getNamedParameterJdbcTemplate().queryForObject("SELECT min(price) min, avg(price) avg, max(price) max FROM estates " + whereString,
+				parameterSource,
+				ESTIMATE_ROW_MAPPER);
+	}
+
 	public SystemDictionary getDistricts() {
-		final List<DictionaryItem> districtList = getNamedParameterJdbcTemplate().query("select * from districts", DICTRICT_ROW_MAPPER);
+		final List<DictionaryItem> districtList = getNamedParameterJdbcTemplate().query("SELECT * FROM districts", DICTRICT_ROW_MAPPER);
 		final Map<Integer, DictionaryItem> itemMap = districtList.stream().collect(Collectors.toMap(DictionaryItem::getId, Function.identity()));
 		return new SystemDictionary("districts", itemMap);
 	}
@@ -140,6 +138,7 @@ public class EstateDao extends BaseDao {
 			estateEntity.setDescription(rs.getString("description"));
 			estateEntity.setRooms(rs.getInt("rooms"));
 			estateEntity.setContacts(rs.getString("contacts"));
+			estateEntity.setPrice(rs.getBigDecimal("price"));
 			estateEntity.setUserId(rs.getLong("user_id"));
 			return estateEntity;
 		}
@@ -151,4 +150,24 @@ public class EstateDao extends BaseDao {
 			return new DictionaryItem(rs.getInt("district_id"), rs.getString("name"));
 		}
 	};
+
+	public static final RowMapper<EstimateEstateResponse> ESTIMATE_ROW_MAPPER = new RowMapper<EstimateEstateResponse>() {
+		@Override
+		public EstimateEstateResponse mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return new EstimateEstateResponse(
+					rs.getBigDecimal("min"),
+					rs.getBigDecimal("avg"),
+					rs.getBigDecimal("max")
+			);
+		}
+	};
+
+	public void generateEstate(GenerateEstatesRequest request) {
+		int count = request.getCount();
+
+		for (int i = 0; i < count; i++) {
+			final EstateEntity estateEntity = EstateEntity.generateRandom(null);
+			addEstate(estateEntity);
+		}
+	}
 }

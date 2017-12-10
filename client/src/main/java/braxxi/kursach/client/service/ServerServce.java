@@ -66,9 +66,25 @@ public class ServerServce {
 		return response.getBody();
 	}
 
+	public void deleteEstate(EstateRequest estateRequest) {
+		HttpEntity<EstateRequest> request = createRequest(estateRequest);
+		ResponseEntity<EstateResponse> response = postForEntity("/estate/delete", request, EstateResponse.class);
+	}
+
+	public EstimateEstateResponse estimateEstate(EstateRequest estateRequest) {
+		HttpEntity<EstateRequest> request = createRequest(estateRequest);
+		ResponseEntity<EstimateEstateResponse> response = postForEntity("/estate/estimate", request, EstimateEstateResponse.class);
+		return response.getBody();
+	}
+
 	public SystemConfigurationResponse getSystemConfiguration() {
 		ResponseEntity<SystemConfigurationResponse> response = postForEntity("/getSystemConfiguration", null, SystemConfigurationResponse.class);
 		return response.getBody();
+	}
+
+	public void generateEstates(GenerateEstatesRequest generateEstatesRequest) {
+		HttpEntity<GenerateEstatesRequest> request = createRequest(generateEstatesRequest);
+		postForEntity("/estate/generate", request, VoidResponse.class);
 	}
 
 	private <T> HttpEntity<T> createRequest(T request) {

@@ -4,32 +4,23 @@ import braxxi.kursach.client.service.ServerServce;
 import braxxi.kursach.client.ui.DefaultDialog;
 import braxxi.kursach.client.ui.EstateView;
 import braxxi.kursach.commons.entity.EstateEntity;
-import braxxi.kursach.commons.model.EstateResponse;
 import braxxi.kursach.commons.model.SystemConfigurationResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-@Component
 public abstract class BaseEstateController implements UIControlller {
-
-	private final Logger logger = LoggerFactory.getLogger(getClass());
-
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	protected ServerServce serverServce;
-
 	protected DefaultDialog dialog;
 	protected EstateView estateView;
 	protected EstateEntity estate;
 	protected SystemConfigurationResponse systemConfiguration;
-
-	public BaseEstateController() {
-	}
 
 	@PostConstruct
 	@Override
@@ -41,7 +32,7 @@ public abstract class BaseEstateController implements UIControlller {
 
 		dialog = new DefaultDialog();
 		dialog.setContent(estateView.getRootPanel());
-		dialog.setActionListener(this::processEstate);
+		dialog.setActionListener(this::processEstateAction);
 	}
 
 	@Override
@@ -57,31 +48,28 @@ public abstract class BaseEstateController implements UIControlller {
 		}
 	}
 
-	protected abstract EstateResponse executeRequest();
-
 	public void setEstate(EstateEntity estate) {
 		this.estate = estate;
 		estateView.setData(estate);
 	}
 
-	private void processEstate(ActionEvent event) {
+	private void processEstateAction(ActionEvent event) {
 		estateView.getData(estate);
 
-		boolean success;
+		boolean closeDialog;
 		try {
-			final EstateResponse response = executeRequest();
-			estate = response.getEstate();
-			success = true;
+			closeDialog = processEstate();
 		} catch (Exception ex) {
-			logger.error("Login error", ex);
-			success = false;
-		}
-
-		if (success) {
-			dispose();
-		} else {
+			logger.error("Error", ex);
+			closeDialog = false;
 			JOptionPane.showMessageDialog(dialog, "Ошибка", "Ошибка", JOptionPane.ERROR_MESSAGE);
 		}
+
+		if (closeDialog) {
+			dispose();
+		}
 	}
+
+	protected abstract boolean processEstate();
 
 }

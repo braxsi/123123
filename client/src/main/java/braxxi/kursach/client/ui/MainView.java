@@ -12,6 +12,8 @@ public class MainView {
 	private JButton deleteEstateButton;
 	private JPanel searchPanel;
 	private JPanel topPanel;
+	private JButton estimateEstateButton;
+	private JButton generateEstateButton;
 
 	public JPanel getRootPanel() {
 		return this.rootPanel;
@@ -35,6 +37,14 @@ public class MainView {
 
 	public JButton getDeleteEstateButton() {
 		return this.deleteEstateButton;
+	}
+
+	public JButton getEstimateEstateButton() {
+		return this.estimateEstateButton;
+	}
+
+	public JButton getGenerateEstateButton() {
+		return this.generateEstateButton;
 	}
 
 	public void setSearchEstateView(SearchEstateView searchEstateView) {
@@ -62,6 +72,7 @@ public class MainView {
 		topPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
 		rootPanel.add(topPanel, BorderLayout.NORTH);
 		final JToolBar toolBar1 = new JToolBar();
+		toolBar1.setFloatable(false);
 		topPanel.add(toolBar1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 20), null, 0, false));
 		searchEstatesButton = new JButton();
 		searchEstatesButton.setText("Поиск");
@@ -77,6 +88,16 @@ public class MainView {
 		deleteEstateButton = new JButton();
 		deleteEstateButton.setText("Удалить");
 		toolBar1.add(deleteEstateButton);
+		final JToolBar.Separator toolBar$Separator2 = new JToolBar.Separator();
+		toolBar1.add(toolBar$Separator2);
+		estimateEstateButton = new JButton();
+		estimateEstateButton.setText("Оценить");
+		toolBar1.add(estimateEstateButton);
+		final JToolBar.Separator toolBar$Separator3 = new JToolBar.Separator();
+		toolBar1.add(toolBar$Separator3);
+		generateEstateButton = new JButton();
+		generateEstateButton.setText("Сгенерировать");
+		toolBar1.add(generateEstateButton);
 		searchPanel = new JPanel();
 		searchPanel.setLayout(new BorderLayout(0, 0));
 		topPanel.add(searchPanel, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));

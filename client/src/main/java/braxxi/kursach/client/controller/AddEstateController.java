@@ -5,7 +5,7 @@ import braxxi.kursach.commons.model.EstateResponse;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AddEstateController extends BaseEstateController {
+public class AddEstateController extends BaseModifyEstateController {
 
 	protected EstateResponse executeRequest() {
 		return serverServce.addEstate(new EstateRequest(estate));

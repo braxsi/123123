@@ -24,6 +24,9 @@ public class SearchEstate {
 	private Integer roomsFrom;
 	private Integer roomsTo;
 
+	private BigDecimal priceFrom;
+	private BigDecimal priceTo;
+
 	public Integer getDistrictId() {
 		return this.districtId;
 	}
@@ -110,5 +113,21 @@ public class SearchEstate {
 
 	public void setRoomsTo(Integer roomsTo) {
 		this.roomsTo = roomsTo;
+	}
+
+	public BigDecimal getPriceFrom() {
+		return this.priceFrom;
+	}
+
+	public void setPriceFrom(BigDecimal priceFrom) {
+		this.priceFrom = priceFrom;
+	}
+
+	public BigDecimal getPriceTo() {
+		return this.priceTo;
+	}
+
+	public void setPriceTo(BigDecimal priceTo) {
+		this.priceTo = priceTo;
 	}
 }

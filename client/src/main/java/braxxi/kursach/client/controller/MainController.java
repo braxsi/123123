@@ -3,20 +3,17 @@ package braxxi.kursach.client.controller;
 import braxxi.kursach.client.service.ServerServce;
 import braxxi.kursach.client.ui.MainForm;
 import braxxi.kursach.commons.entity.EstateEntity;
-import braxxi.kursach.commons.model.SearchEstate;
-import braxxi.kursach.commons.model.SearchRequest;
-import braxxi.kursach.commons.model.SearchResponse;
-import braxxi.kursach.commons.model.SystemConfigurationResponse;
+import braxxi.kursach.commons.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 @Component
-//@Scope(scopeName = SCOPE_PROTOTYPE)
 public class MainController implements UIControlller {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -26,9 +23,11 @@ public class MainController implements UIControlller {
 	@Autowired
 	private LoginController loginController;
 	@Autowired
-	private AddEstateController addEstateController;
+	private BaseEstateController addEstateController;
 	@Autowired
 	private EditEstateController editEstateController;
+	@Autowired
+	private EstimateEstateController estimateEstateController;
 
 	private MainForm mainForm;
 	private SystemConfigurationResponse systemConfigurationResponse;
@@ -46,6 +45,9 @@ public class MainController implements UIControlller {
 		mainForm.setSearchActionListener(this::searchEstates);
 		mainForm.setAddActionListener(this::addEstate);
 		mainForm.setEditActionListener(this::updateEstate);
+		mainForm.setDeleteActionListener(this::deleteEstate);
+		mainForm.setEstimateActionListener(this::estimateEstate);
+		mainForm.setGenerateActionListener(this::generateEstate);
 	}
 
 	public void searchEstates(ActionEvent event) {
@@ -70,6 +72,26 @@ public class MainController implements UIControlller {
 		editEstateController.dispose();
 
 		// todo update the estate in the table only
+		searchEstates(null);
+	}
+
+	public void deleteEstate(ActionEvent event) {
+		if (JOptionPane.showConfirmDialog(mainForm, "Удалить?", "Удаление записи", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+			serverServce.deleteEstate(new EstateRequest(mainForm.getCurrentEstate()));
+			// todo update the estate in the table only
+			searchEstates(null);
+		}
+	}
+
+	public void estimateEstate(ActionEvent event) {
+		estimateEstateController.init();
+		estimateEstateController.setEstate(new EstateEntity());
+		estimateEstateController.show();
+		estimateEstateController.dispose();
+	}
+
+	public void generateEstate(ActionEvent event) {
+		serverServce.generateEstates(new GenerateEstatesRequest(10));
 		searchEstates(null);
 	}
 
@@ -98,6 +120,9 @@ public class MainController implements UIControlller {
 		}
 		if (editEstateController != null) {
 			editEstateController.dispose();
+		}
+		if (estimateEstateController != null) {
+			estimateEstateController.dispose();
 		}
 		if (mainForm != null) {
 			mainForm.dispose();

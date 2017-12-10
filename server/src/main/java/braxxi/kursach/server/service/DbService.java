@@ -2,6 +2,8 @@ package braxxi.kursach.server.service;
 
 
 import braxxi.kursach.commons.entity.EstateEntity;
+import braxxi.kursach.commons.model.EstimateEstateResponse;
+import braxxi.kursach.commons.model.GenerateEstatesRequest;
 import braxxi.kursach.commons.model.SearchEstate;
 import braxxi.kursach.commons.model.SystemDictionary;
 import braxxi.kursach.server.dao.EstateDao;
@@ -44,5 +46,17 @@ public class DbService {
 
 	public SystemDictionary getDistricts() {
 		return estateDao.getDistricts();
+	}
+
+	public void deleteEstate(Long estateId) {
+		estateDao.deleteEstate(estateId);
+	}
+
+	public EstimateEstateResponse estimateEstate(EstateEntity requestEstate) {
+		return estateDao.estimateEstate(requestEstate);
+	}
+
+	public void generateEstate(GenerateEstatesRequest request) {
+		estateDao.generateEstate(request);
 	}
 }

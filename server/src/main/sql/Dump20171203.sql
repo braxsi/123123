@@ -1,4 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `braxsi1` /*!40100 DEFAULT CHARACTER SET utf8 */;
+ALTER DATABASE  `braxsi1` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
 USE `braxsi1`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
@@ -57,6 +59,7 @@ CREATE TABLE `estates` (
   `description` varchar(512) DEFAULT NULL,
   `rooms` INT(11) NOT NULL,
   `contacts` varchar(255) NOT NULL,
+  `price` DECIMAL(10,1) NOT NULL,
   `user_id` int(16) NOT NULL,
   PRIMARY KEY (`estate_id`),
   KEY `fk_estates_users_idx` (`user_id`),

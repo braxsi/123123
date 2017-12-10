@@ -30,7 +30,7 @@ public class SystemDictionary {
 		return itemMap.values();
 	}
 
-	public DictionaryItem findById(int districtId) {
+	public DictionaryItem findById(Integer districtId) {
 		return itemMap.get(districtId);
 	}
 }

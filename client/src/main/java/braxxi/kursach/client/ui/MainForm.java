@@ -21,6 +21,8 @@ public class MainForm extends JFrame {
 	private DefaultAction addEstateAction = new DefaultAction("Добавить");
 	private DefaultAction editEstateAction = new DefaultAction("Изменить");
 	private DefaultAction deleteEstateAction = new DefaultAction("Удалить");
+	private DefaultAction estimateEstateAction = new DefaultAction("Оценка стоимости");
+	private DefaultAction generateEstateAction = new DefaultAction("Сгенерировать записи");
 	private SystemDictionary districts;
 
 	public MainForm() {
@@ -44,14 +46,16 @@ public class MainForm extends JFrame {
 		MainView mainView = new MainView();
 		setContentPane(mainView.getRootPanel());
 
-		mainView.setSearchEstateView(searchEstateView);
-
 		setJMenuBar(createMenubar());
+
+		mainView.setSearchEstateView(searchEstateView);
 
 		mainView.getSearchEstatesButton().setAction(searchEstateAction);
 		mainView.getAddEstateButton().setAction(addEstateAction);
 		mainView.getEditEstateButton().setAction(editEstateAction);
 		mainView.getDeleteEstateButton().setAction(deleteEstateAction);
+		mainView.getEstimateEstateButton().setAction(estimateEstateAction);
+		mainView.getGenerateEstateButton().setAction(generateEstateAction);
 
 		mainView.getMainTable().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		mainView.getMainTable().setRowSelectionAllowed(true);
@@ -112,6 +116,18 @@ public class MainForm extends JFrame {
 
 	public void setEditActionListener(ActionListener actionListener) {
 		this.editEstateAction.setActionListener(actionListener);
+	}
+
+	public void setDeleteActionListener(ActionListener actionListener) {
+		this.deleteEstateAction.setActionListener(actionListener);
+	}
+
+	public void setEstimateActionListener(ActionListener actionListener) {
+		this.estimateEstateAction.setActionListener(actionListener);
+	}
+
+	public void setGenerateActionListener(ActionListener actionListener) {
+		this.generateEstateAction.setActionListener(actionListener);
 	}
 
 	public EstateEntity getCurrentEstate() {
