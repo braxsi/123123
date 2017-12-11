@@ -4,10 +4,35 @@ import braxxi.kursach.commons.entity.EstateEntity;
 import braxxi.kursach.commons.model.DictionaryItem;
 import braxxi.kursach.commons.model.SystemDictionary;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class EstateTableModel extends DefaultTableModel<EstateEntity> {
 
+	public static final String[] COLUMN_NAMES = {
+			"Район",
+			"Общая площадь",
+			"Жилая площадь",
+			"Площадь кухни",
+			"Этаж",
+			"Всего этажей",
+			"До метро, метров",
+			"Стоимость",
+			"Описание",
+			"Контакты",
+	};
+	public static final Class[] COLUMN_TYPES = {
+			String.class,
+			BigDecimal.class,
+			BigDecimal.class,
+			BigDecimal.class,
+			Integer.class,
+			Integer.class,
+			Integer.class,
+			BigDecimal.class,
+			String.class,
+			String.class,
+	};
 	private SystemDictionary districts;
 
 	public EstateTableModel(SystemDictionary districts, List<EstateEntity> estates) {
@@ -17,18 +42,12 @@ public class EstateTableModel extends DefaultTableModel<EstateEntity> {
 
 	@Override
 	public String[] getColumnLabels() {
-		return new String[]{
-				"Район",
-				"Общая площадь",
-				"Жилая площадь",
-				"Площадь кухни",
-				"Этаж",
-				"Всего этажей",
-				"До метро, метров",
-				"Стоимость",
-				"Описание",
-				"Контакты",
-		};
+		return COLUMN_NAMES;
+	}
+
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+		return COLUMN_TYPES[columnIndex];
 	}
 
 	@Override
@@ -59,6 +78,10 @@ public class EstateTableModel extends DefaultTableModel<EstateEntity> {
 			default:
 				return "";
 		}
+	}
+
+	public List<EstateEntity> getEntities() {
+		return entities;
 	}
 
 }

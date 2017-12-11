@@ -42,6 +42,7 @@ public class ServerServce {
 		if (response.getBody().isSuccess()) {
 			// TODO final List<String> cookie = response.getHeaders().get("Cookie");
 			serverSession.setCookie("unknown");
+			serverSession.setUser(response.getBody().getUser());
 			return true;
 		} else {
 			return false;

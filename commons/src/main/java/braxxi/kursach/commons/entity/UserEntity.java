@@ -5,6 +5,13 @@ public class UserEntity extends BaseEntity {
 	private String password;
 	private String email;
 
+	public UserEntity() {
+	}
+
+	public UserEntity(Long id) {
+		this.setId(id);
+	}
+
 	public String getLogin() {
 		return this.login;
 	}

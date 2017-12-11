@@ -2,6 +2,7 @@ package braxxi.kursach.server.service;
 
 
 import braxxi.kursach.commons.entity.EstateEntity;
+import braxxi.kursach.commons.entity.UserEntity;
 import braxxi.kursach.commons.model.EstimateEstateResponse;
 import braxxi.kursach.commons.model.GenerateEstatesRequest;
 import braxxi.kursach.commons.model.SearchEstate;
@@ -24,8 +25,8 @@ public class DbService {
 	@Autowired
 	EstateDao estateDao;
 
-	public boolean isLoginValid(String login, String password) {
-		return userDao.getUser(login, password) != null;
+	public UserEntity isLoginValid(String login, String password) {
+		return userDao.getUser(login, password);
 	}
 
 	public List<EstateEntity> searchEstate(SearchEstate searchEstate) {

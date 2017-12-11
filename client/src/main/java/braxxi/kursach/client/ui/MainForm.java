@@ -4,6 +4,7 @@ import braxxi.kursach.client.model.DefaultAction;
 import braxxi.kursach.client.model.DefaultTableModel;
 import braxxi.kursach.client.model.EstateTableModel;
 import braxxi.kursach.commons.entity.EstateEntity;
+import braxxi.kursach.commons.entity.UserEntity;
 import braxxi.kursach.commons.model.SearchEstate;
 import braxxi.kursach.commons.model.SearchResponse;
 import braxxi.kursach.commons.model.SystemDictionary;
@@ -12,6 +13,8 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Objects;
 
 public class MainForm extends JFrame {
 
@@ -23,7 +26,9 @@ public class MainForm extends JFrame {
 	private DefaultAction deleteEstateAction = new DefaultAction("Удалить");
 	private DefaultAction estimateEstateAction = new DefaultAction("Оценка стоимости");
 	private DefaultAction generateEstateAction = new DefaultAction("Сгенерировать записи");
+	private DefaultAction saveEstatesAction = new DefaultAction("Сохранить в файл");
 	private SystemDictionary districts;
+	private UserEntity user;
 
 	public MainForm() {
 	}
@@ -33,6 +38,7 @@ public class MainForm extends JFrame {
 		searchEstateView = creatSearchEstateView(this.districts);
 		mainView = createMainView(searchEstateView);
 
+		setSize(700, 480);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
@@ -56,23 +62,26 @@ public class MainForm extends JFrame {
 		mainView.getDeleteEstateButton().setAction(deleteEstateAction);
 		mainView.getEstimateEstateButton().setAction(estimateEstateAction);
 		mainView.getGenerateEstateButton().setAction(generateEstateAction);
+		mainView.getSaveEstatesButton().setAction(saveEstatesAction);
 
-		mainView.getMainTable().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		mainView.getMainTable().setRowSelectionAllowed(true);
-		mainView.getMainTable().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		final JTable mainTable = mainView.getMainTable();
+		mainTable.setAutoCreateRowSorter(true);
+		mainTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		mainTable.setRowSelectionAllowed(true);
+		mainTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				ListSelectionModel listSelectionModel = (ListSelectionModel)e.getSource();
-				updateOnTableSelectionChange(!listSelectionModel.isSelectionEmpty());
+				updateOnTableSelectionChange(getCurrentEstate());
 			}
 		});
-		updateOnTableSelectionChange(false);
+		updateOnTableSelectionChange(null);
 		return mainView;
 	}
 
-	private void updateOnTableSelectionChange(boolean hasSelection) {
-		editEstateAction.setEnabled(hasSelection);
-		deleteEstateAction.setEnabled(hasSelection);
+	private void updateOnTableSelectionChange(EstateEntity entity) {
+		final boolean canEnable = entity != null && Objects.equals(user.getId(), entity.getUserId());
+		editEstateAction.setEnabled(canEnable);
+		deleteEstateAction.setEnabled(canEnable);
 	}
 
 	private JMenuBar createMenubar() {
@@ -98,7 +107,9 @@ public class MainForm extends JFrame {
 		setVisible(true);
 	}
 
-	public void enableForm() {
+	public void enableForm(UserEntity user) {
+		this.user = user;
+		mainView.getUserLabel().setText(user.getLogin());
 		mainView.getRootPanel().setVisible(true);
 	}
 
@@ -130,10 +141,25 @@ public class MainForm extends JFrame {
 		this.generateEstateAction.setActionListener(actionListener);
 	}
 
+	public void setSaveActionListener(ActionListener actionListener) {
+		this.saveEstatesAction.setActionListener(actionListener);
+	}
+
 	public EstateEntity getCurrentEstate() {
-		final int selectedRow = mainView.getMainTable().getSelectedRow();
-		final DefaultTableModel<EstateEntity> model = (DefaultTableModel<EstateEntity>) mainView.getMainTable().getModel();
-		return model.getEntityByRow(selectedRow);
+		final JTable mainTable = mainView.getMainTable();
+		int selectedRow = mainTable.getSelectedRow();
+		if (selectedRow >= 0) {
+			selectedRow = mainTable.convertRowIndexToModel(selectedRow);
+			final DefaultTableModel<EstateEntity> model = (DefaultTableModel<EstateEntity>) mainTable.getModel();
+			return model.getEntityByRow(selectedRow);
+		} else {
+			return null;
+		}
+	}
+
+	public List<EstateEntity> getEstates() {
+		EstateTableModel model = (EstateTableModel) mainView.getMainTable().getModel();
+		return model.getEntities();
 	}
 
 	public SearchEstate getSearchEstate() {

@@ -113,6 +113,8 @@ UNLOCK TABLES;
 -- Dump completed on 2017-12-03 23:31:21
 
 INSERT INTO users (user_id, login, password, email) VALUES (1, 'admin', 'password', 'admin');
+INSERT INTO users (user_id, login, password, email) VALUES (2, 'user2', 'user2', 'user2');
+INSERT INTO users (user_id, login, password, email) VALUES (3, 'user3', 'user3', 'user3');
 
 INSERT INTO districts (district_id, name) VALUES (1, 'Центральный район');
 INSERT INTO districts (district_id, name) VALUES (2, 'Советский район');

@@ -14,6 +14,8 @@ public class MainView {
 	private JPanel topPanel;
 	private JButton estimateEstateButton;
 	private JButton generateEstateButton;
+	private JButton saveEstatesButton;
+	private JLabel userLabel;
 
 	public JPanel getRootPanel() {
 		return this.rootPanel;
@@ -47,6 +49,14 @@ public class MainView {
 		return this.generateEstateButton;
 	}
 
+	public JButton getSaveEstatesButton() {
+		return this.saveEstatesButton;
+	}
+
+	public JLabel getUserLabel() {
+		return this.userLabel;
+	}
+
 	public void setSearchEstateView(SearchEstateView searchEstateView) {
 		this.searchPanel.add(searchEstateView.getRootPanel());
 	}
@@ -69,7 +79,7 @@ public class MainView {
 		rootPanel = new JPanel();
 		rootPanel.setLayout(new BorderLayout(0, 0));
 		topPanel = new JPanel();
-		topPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+		topPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 3, new Insets(0, 0, 0, 0), -1, -1));
 		rootPanel.add(topPanel, BorderLayout.NORTH);
 		final JToolBar toolBar1 = new JToolBar();
 		toolBar1.setFloatable(false);
@@ -95,12 +105,22 @@ public class MainView {
 		toolBar1.add(estimateEstateButton);
 		final JToolBar.Separator toolBar$Separator3 = new JToolBar.Separator();
 		toolBar1.add(toolBar$Separator3);
+		saveEstatesButton = new JButton();
+		saveEstatesButton.setText("Сохранить");
+		toolBar1.add(saveEstatesButton);
 		generateEstateButton = new JButton();
 		generateEstateButton.setText("Сгенерировать");
 		toolBar1.add(generateEstateButton);
 		searchPanel = new JPanel();
 		searchPanel.setLayout(new BorderLayout(0, 0));
-		topPanel.add(searchPanel, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+		topPanel.add(searchPanel, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+		final JPanel panel1 = new JPanel();
+		panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 5, 0, 5), -1, -1));
+		topPanel.add(panel1, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+		panel1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
+		userLabel = new JLabel();
+		userLabel.setText("Label");
+		panel1.add(userLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
 		final JScrollPane scrollPane1 = new JScrollPane();
 		rootPanel.add(scrollPane1, BorderLayout.CENTER);
 		mainTable = new JTable();

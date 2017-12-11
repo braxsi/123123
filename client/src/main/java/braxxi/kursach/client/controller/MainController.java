@@ -1,6 +1,8 @@
 package braxxi.kursach.client.controller;
 
+import braxxi.kursach.client.service.ExportService;
 import braxxi.kursach.client.service.ServerServce;
+import braxxi.kursach.client.service.ServerSession;
 import braxxi.kursach.client.ui.MainForm;
 import braxxi.kursach.commons.entity.EstateEntity;
 import braxxi.kursach.commons.model.*;
@@ -12,6 +14,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 @Component
 public class MainController implements UIControlller {
@@ -20,6 +25,10 @@ public class MainController implements UIControlller {
 
 	@Autowired
 	private ServerServce serverServce;
+	@Autowired
+	private ServerSession serverSession;
+	@Autowired
+	private ExportService exportService;
 	@Autowired
 	private LoginController loginController;
 	@Autowired
@@ -31,6 +40,7 @@ public class MainController implements UIControlller {
 
 	private MainForm mainForm;
 	private SystemConfigurationResponse systemConfigurationResponse;
+	private JFileChooser fileChooser;
 
 	public MainController() {
 	}
@@ -39,7 +49,6 @@ public class MainController implements UIControlller {
 	@Override
 	public void init() {
 		systemConfigurationResponse = serverServce.getSystemConfiguration();
-
 		mainForm = new MainForm();
 		mainForm.init(systemConfigurationResponse.getDistricts());
 		mainForm.setSearchActionListener(this::searchEstates);
@@ -48,6 +57,9 @@ public class MainController implements UIControlller {
 		mainForm.setDeleteActionListener(this::deleteEstate);
 		mainForm.setEstimateActionListener(this::estimateEstate);
 		mainForm.setGenerateActionListener(this::generateEstate);
+		mainForm.setSaveActionListener(this::saveEstates);
+
+		fileChooser = new JFileChooser();
 	}
 
 	public void searchEstates(ActionEvent event) {
@@ -95,6 +107,19 @@ public class MainController implements UIControlller {
 		searchEstates(null);
 	}
 
+	public void saveEstates(ActionEvent event) {
+		if (fileChooser.showSaveDialog(mainForm) == JFileChooser.APPROVE_OPTION) {
+			final File selectedFile = fileChooser.getSelectedFile();
+			try {
+				final List<EstateEntity> estates = mainForm.getEstates();
+				exportService.saveEstates(estates, selectedFile);
+			} catch (IOException e) {
+				logger.error("error", e);
+				JOptionPane.showMessageDialog(mainForm, "Ошибка", "Ошибка", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+
 	@Override
 	public void show() {
 		mainForm.showDisabledForm();
@@ -105,7 +130,7 @@ public class MainController implements UIControlller {
 		loginController.dispose();
 
 		if (serverServce.isLoggedIn()) {
-			mainForm.enableForm();
+			mainForm.enableForm(serverSession.getUser());
 			searchEstates(null);
 		}
 	}

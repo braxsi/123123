@@ -1,6 +1,7 @@
 package braxxi.kursach.server.controller;
 
 import braxxi.kursach.commons.entity.EstateEntity;
+import braxxi.kursach.commons.entity.UserEntity;
 import braxxi.kursach.commons.model.*;
 import braxxi.kursach.server.service.DbService;
 import com.google.common.base.Preconditions;
@@ -26,7 +27,7 @@ public class TestMainController {
 
 	@PostMapping("/login")
 	public LoginResponse login(String login, String password) {
-		return new LoginResponse(true);
+		return new LoginResponse(true, new UserEntity(1L));
 	}
 
 	@PostMapping("/estate/search")

@@ -1,6 +1,7 @@
 package braxxi.kursach.server.controller;
 
 import braxxi.kursach.commons.entity.EstateEntity;
+import braxxi.kursach.commons.entity.UserEntity;
 import braxxi.kursach.commons.model.*;
 import braxxi.kursach.server.service.DbService;
 import com.google.common.base.Preconditions;
@@ -24,7 +25,8 @@ public class MainController {
 
 	@PostMapping("/login")
 	public LoginResponse login(String login, String password) {
-		return new LoginResponse(dbService.isLoginValid(login, password));
+		final UserEntity user = dbService.isLoginValid(login, password);
+		return new LoginResponse(user != null, user);
 	}
 
 	@PostMapping("/estate/search")
@@ -34,10 +36,7 @@ public class MainController {
 
 	@PostMapping("/estate/add")
 	public EstateResponse addEstate(@RequestBody EstateRequest request) {
-		// todo Security
 		final EstateEntity requestEstate = Preconditions.checkNotNull(request.getEstate());
-		// todo user
-		requestEstate.setUserId(1L);
 		Long estateId = dbService.addEstate(requestEstate);
 		return new EstateResponse(dbService.getEstate(estateId));
 	}
@@ -45,8 +44,6 @@ public class MainController {
 	@PostMapping("/estate/update")
 	public EstateResponse updateEstate(@RequestBody EstateRequest request) {
 		final EstateEntity requestEstate = request.getEstate();
-		// todo user
-		requestEstate.setUserId(1L);
 		dbService.updateEstate(requestEstate);
 		return new EstateResponse(dbService.getEstate(requestEstate.getId()));
 	}
