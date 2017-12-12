@@ -7,8 +7,7 @@ import org.apache.commons.text.RandomStringGenerator;
 import java.math.BigDecimal;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class EstateEntity {
-	private Long id;
+public class EstateEntity extends BaseEntity {
 	private Integer districtId;
 	private BigDecimal totalArea;
 	private BigDecimal livingArea;
@@ -26,7 +25,7 @@ public class EstateEntity {
 	}
 
 	public EstateEntity(Long id, Integer districtId, BigDecimal totalArea, BigDecimal livingArea, BigDecimal kitchenArea, Integer floor, Integer floors, Integer distanceToMetro, String description, Integer rooms, BigDecimal price, String contacts, Long userId) {
-		this.id = id;
+		super(id);
 		this.districtId = districtId;
 		this.totalArea = totalArea;
 		this.livingArea = livingArea;
@@ -39,14 +38,6 @@ public class EstateEntity {
 		this.price = price;
 		this.contacts = contacts;
 		this.userId = userId;
-	}
-
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public Integer getDistrictId() {
