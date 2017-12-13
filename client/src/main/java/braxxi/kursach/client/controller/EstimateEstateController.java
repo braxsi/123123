@@ -12,10 +12,17 @@ public class EstimateEstateController extends BaseEstateController {
 	@Override
 	protected boolean processEstate() {
 		final EstimateEstateResponse response = serverServce.estimateEstate(new EstateRequest(estate));
+		final String message;
+		if (response.getAvrPrice() == null) {
+			message = "БД не содержит объектов недвижимости с аналогичными параметрами";
+		} else {
+			message = "Минимальная стоимость: " + response.getMinPrice() +
+					"\nСредняя стоимость: " + response.getAvrPrice() +
+					"\nМаксимальная стоимость: " + response.getMaxPrice();
+		}
+
 		JOptionPane.showMessageDialog(dialog,
-				"Минимальная стоимость: " + response.getMinPrice() +
-				"\nСредняя стоимость: " + response.getAvrPrice() +
-				"\nМаксимальная стоимость: " + response.getMaxPrice());
+				message);
 		return false;
 	}
 }
