@@ -6,6 +6,8 @@ import braxxi.kursach.commons.model.SystemDictionary;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -26,6 +28,28 @@ public class SearchEstateView {
 	private JFormattedTextField formattedTextFieldFloorTo;
 	private JFormattedTextField formattedTextFieldPriceFrom;
 	private JFormattedTextField formattedTextFieldPriceTo;
+	private JButton clearButton;
+
+	public SearchEstateView() {
+		clearButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				comboBoxDistrict.setSelectedIndex(-1);
+				formattedTextFieldTotalAreaFrom.setValue(null);
+				formattedTextFieldTotalAreaTo.setValue(null);
+				formattedTextFieldLivingFrom.setValue(null);
+				formattedTextFieldLivingAreaTo.setValue(null);
+				formattedTextFieldKitchenAreaFrom.setValue(null);
+				formattedTextFieldKitchenAreaTo.setValue(null);
+				formattedTextFieldPriceFrom.setValue(null);
+				formattedTextFieldPriceTo.setValue(null);
+				formattedTextFieldRoomsFrom.setValue(null);
+				formattedTextFieldRoomsTo.setValue(null);
+				formattedTextFieldFloorFrom.setValue(null);
+				formattedTextFieldFloorTo.setValue(null);
+			}
+		});
+	}
 
 	public void init(SystemDictionary districts) {
 		final java.util.List<DictionaryItem> items = new ArrayList(districts.getItems());
@@ -169,6 +193,9 @@ public class SearchEstateView {
 		rootPanel.add(label13, new com.intellij.uiDesigner.core.GridConstraints(6, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
 		formattedTextFieldPriceTo = new JFormattedTextField();
 		rootPanel.add(formattedTextFieldPriceTo, new com.intellij.uiDesigner.core.GridConstraints(6, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+		clearButton = new JButton();
+		clearButton.setText("Очистить");
+		rootPanel.add(clearButton, new com.intellij.uiDesigner.core.GridConstraints(0, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
 	}
 
 	/**

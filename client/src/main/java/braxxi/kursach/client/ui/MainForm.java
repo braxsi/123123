@@ -31,6 +31,7 @@ public class MainForm extends JFrame {
 	private UserEntity user;
 
 	public MainForm() {
+		setTitle("Система автоматизации оценки объектов недвижимости");
 	}
 
 	public void init(SystemDictionary districts) {
@@ -61,8 +62,10 @@ public class MainForm extends JFrame {
 		mainView.getEditEstateButton().setAction(editEstateAction);
 		mainView.getDeleteEstateButton().setAction(deleteEstateAction);
 		mainView.getEstimateEstateButton().setAction(estimateEstateAction);
-		mainView.getGenerateEstateButton().setAction(generateEstateAction);
 		mainView.getSaveEstatesButton().setAction(saveEstatesAction);
+
+		mainView.getGenerateEstateButton().setVisible(false);
+		mainView.getGenerateEstateButton().setAction(generateEstateAction);
 
 		final JTable mainTable = mainView.getMainTable();
 		mainTable.setAutoCreateRowSorter(true);
