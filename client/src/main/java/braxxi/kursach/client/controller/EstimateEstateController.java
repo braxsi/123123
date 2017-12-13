@@ -10,6 +10,13 @@ import javax.swing.*;
 public class EstimateEstateController extends BaseEstateController {
 
 	@Override
+	public void init() {
+		super.init();
+
+		estateView.prepareEstimateView();
+	}
+
+	@Override
 	protected boolean processEstate() {
 		final EstimateEstateResponse response = serverServce.estimateEstate(new EstateRequest(estate));
 		final String message;

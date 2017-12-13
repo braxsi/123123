@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="4a8f2" class="javax.swing.JLabel">
+      <component id="4a8f2" class="javax.swing.JLabel" binding="metroLabel">
         <constraints>
           <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -32,7 +32,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="1e6df" class="javax.swing.JLabel">
+      <component id="1e6df" class="javax.swing.JLabel" binding="floorLabel">
         <constraints>
           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -82,7 +82,7 @@
           <text value="Район"/>
         </properties>
       </component>
-      <component id="8c60f" class="javax.swing.JLabel">
+      <component id="8c60f" class="javax.swing.JLabel" binding="descriptionLabel">
         <constraints>
           <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -90,7 +90,7 @@
           <text value="Описание"/>
         </properties>
       </component>
-      <scrollpane id="36ab1">
+      <scrollpane id="36ab1" binding="descriptionScrollPane">
         <constraints>
           <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -123,7 +123,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="7695e" class="javax.swing.JLabel">
+      <component id="7695e" class="javax.swing.JLabel" binding="contactsLabel">
         <constraints>
           <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -155,7 +155,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="edcc7" class="javax.swing.JLabel">
+      <component id="edcc7" class="javax.swing.JLabel" binding="floorsLabel">
         <constraints>
           <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -177,7 +177,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="4fc58" class="javax.swing.JLabel">
+      <component id="4fc58" class="javax.swing.JLabel" binding="priceLabel">
         <constraints>
           <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
