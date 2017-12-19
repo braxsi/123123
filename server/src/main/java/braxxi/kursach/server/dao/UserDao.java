@@ -29,6 +29,7 @@ public class UserDao extends BaseDao {
 			userEntity.setLogin(rs.getString("login"));
 			userEntity.setPassword(rs.getString("password"));
 			userEntity.setEmail(rs.getString("email"));
+			userEntity.setAdmin(rs.getBoolean("is_admin"));
 			return userEntity;
 		}
 	};

@@ -82,7 +82,8 @@ public class MainForm extends JFrame {
 	}
 
 	private void updateOnTableSelectionChange(EstateEntity entity) {
-		final boolean canEnable = entity != null && Objects.equals(user.getId(), entity.getUserId());
+		final boolean canEnable = entity != null &&
+				(Objects.equals(user.getId(), entity.getUserId()) || user.isAdmin());
 		editEstateAction.setEnabled(canEnable);
 		deleteEstateAction.setEnabled(canEnable);
 	}

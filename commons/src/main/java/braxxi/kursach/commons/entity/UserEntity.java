@@ -4,6 +4,7 @@ public class UserEntity extends BaseEntity {
 	private String login;
 	private String password;
 	private String email;
+	private boolean isAdmin;
 
 	public UserEntity() {
 	}
@@ -34,5 +35,13 @@ public class UserEntity extends BaseEntity {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public boolean isAdmin() {
+		return this.isAdmin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.isAdmin = admin;
 	}
 }

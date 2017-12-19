@@ -90,6 +90,8 @@ CREATE TABLE `users` (
   `login` varchar(32) NOT NULL,
   `password` varchar(32) NOT NULL,
   `email` varchar(64) NOT NULL,
+  `email` varchar(64) NOT NULL,
+  `is_admin` BOOLEAN DEFAULT 0 NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
